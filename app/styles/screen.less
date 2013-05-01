@@ -1,0 +1,33 @@
+@import "../scripts/vendor/bootstrap/less/bootstrap.less";
+@import "../scripts/vendor/bootstrap/less/responsive.less";
+@import "bootstrap-custom.less";
+
+html, 
+body {
+	height:100%;
+}
+
+#body {
+	
+}
+
+#main {
+	min-height:100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -61px;
+}
+
+#push,
+#footer {
+	height:60px;
+}
+
+#footer {
+	background:@grayLighter;
+	border-top:1px solid @grayLight;
+	p {
+		text-align:center;
+		padding-top:20px;
+	}
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Timer</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet/less" type="text/css" href="styles/screen.less">
+	<script src="scripts/vendor/less.js/dist/less-1.3.3.js"></script>
+	<script>
+	if(window.localStorage)
+		localStorage.clear();
+	</script>
+
+	<script data-main="scripts/AppConfig" src="scripts/vendor/requirejs/require.js"></script>
+</head>
+<body>
+
+	<div id="main">
+		<div id="header">
+			<div class="navbar navbar-inverse">
+			<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="brand" href="#">Timers</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#/timers">Timers</a></li>
+						<li><a href="#/timer/2">Timer 2</a></li>
+						<li><a href="#/timer_create">Create Timer</a></li>
+					</ul>
+				</div>
+			</div>
+			</div>
+			</div>
+		</div>
+
+		<div id="body">
+			<div class="container-fluid">
+				<div class="body"></div>
+			</div>
+		</div>
+
+		<div id="push"></div>
+	</div>
+	
+	<div id="footer">
+		<p>&copy; 2013</p>
+	</div>
+
+</body>
+</html>
