@@ -1,17 +1,20 @@
 var fs = require('fs')
-  , extend = require('extend');
+  , extend = require('xtend');
+
+var defaultConfig = {
+	MODE: 'debug',
+	API_PORT: 1337,
+	APP_PORT: 80,
+	APP_URL: 'localhost',
+	BASE_PATH: __dirname+'/../',
+	APP_PATH: __dirname+'/../app/',
+	API_PATH: __dirname+'/'
+};
 
 exports = module.exports = loadConfig();
 
-var defaultConfig = {
-	API_PORT: 1337,
-	APP_PORT: 80,
-	BASEPATH: __dirname+'/../'
-};
-
 function loadConfig(){
-	var config = {};
-	var userConfig = JSON.parse(fs.readFileSync(__dirname+'/../config.json'));
-	extend(config, userConfig, defaultConfig);
+	var userConfig = JSON.parse(fs.readFileSync(defaultConfig.BASE_PATH+'config.json'));
+	var config = extend(true, defaultConfig, userConfig);
 	return config;
 }
