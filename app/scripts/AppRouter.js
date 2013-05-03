@@ -35,7 +35,7 @@ define([
 
 		app_router.on('route:createTimer', function(){
 			var timer = new TimerModel();
-			timer.set('Name', 'This is my test timer.');
+			timer.set('Name', new Date().toString());
 			timer.save().done(function(data){
 				console.log(data);
 			});
@@ -43,11 +43,12 @@ define([
 
 		app_router.on('route:updateTimer', function(id){
 			var timer = new TimerModel({Id:id});
-			//timer.fetch().done(function(){
+			timer.fetch().done(function(){
+				timer.set('Name', 'new !!'+new Date().toString());
 				timer.save().done(function(data){
 					console.log(data);
 				});
-			//});
+			});
 		});
 
 		app_router.on('route:showDashboard', function(){

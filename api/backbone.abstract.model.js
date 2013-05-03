@@ -1,36 +1,49 @@
 define([
+	'q',
 	'backbone'
-], function(Backbone){
+], function(Q, Backbone, mongodb){
 
-	var realSync = Backbone.sync
+	var realSync = Backbone.sync;
+	var Timers = 0;
 
 	//Modify the sync method to play nice with custom URLs.
 	Backbone.realSync = Backbone.sync;
 	Backbone.sync = function(method, model, options){
 		options = options || {};
+
+		var deferred = Q.defer();
+		
 		switch(method){
 			case('create'):
-				console.log('I am saving: '+ JSON.stringify(model.toJSON()));
+					//Take this model and store it in a db, or memory
+					var id = ++Timers;
+					//Return the saved model with ID
+					model.set('Id', id);
+					deferred.resolve(model);
 				break;
 			case('read'):
+				//Reading a collection from the db
 				if(model.models && model.models.length >= 0){
-					var thisModel = model.getModel();
-					console.log('I am loading all of the models: '+thisModel.namespace);
+					deferred.resolve(model);
 				}
-				else
-					console.log('I am reading: '+ JSON.stringify(model.toJSON()));
+				//Reading a single model
+				else {
+					deferred.resolve(model);
+				}
 				break;
 			case('update'):
-				console.log('I am updating: '+ JSON.stringify(model.toJSON()));
+				//Updating a db record by ID
+				deferred.resolve(model);
 				break;
 			case('delete'):
-				console.log('I am deleting: '+ JSON.stringify(model.toJSON()));
+				//Removing a db record by ID
+				deferred.resolve(model);
 				break;
 			default:
 				console.log('That ain\'t right...');
 			break;
 		}
-		return model;
+		return deferred.promise;
 	}
 
 	return Backbone;

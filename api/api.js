@@ -16,6 +16,9 @@ requirejs.config({
 var TimerModel = requirejs(config.APP_PATH+'scripts/model/timer/TimerModel.js');
 var TimerCollection = requirejs(config.APP_PATH+'scripts/collection/timer/TimerCollection.js');
 
+//Temporary DB store
+var timers = new TimerCollection();
+
 function init(){
 	var api = http.createServer();
 	api.on('request', handleRequest);
@@ -25,8 +28,7 @@ function init(){
 }
 
 function read(id){
-	var timer = new TimerModel({Id:id});
-	timer.fetch();
+	var timer = timers.get(id);
 	write(this.res, timer.toJSON());
 }
 
@@ -35,23 +37,29 @@ function noop(){
 }
 
 function update(id){
-	var timer = new TimerModel({Id:id});
-	timer.set('Name', 'omg a name');
-	timer.save();
-	write(this.res, timer.toJSON());
+	var that = this;
+	var timer = timers.get(id);
+	timer.set(this.req.body);
+	timer.save().then(function(){
+		write(that.res, timer.toJSON());
+	});
 }
 
 function create(){
-	var timer = new TimerModel();
-	timer.set('Name', 'omg a new name');
-	timer.save();
-	write(this.res, timer.toJSON());
+	var that = this;
+	var timer = new TimerModel(this.req.body);
+	timer.save().then(function(){
+		timers.add(timer);
+		write(that.res, timer.toJSON());
+	});
 }
 
 function list(){
-	var timers = new TimerCollection();
-	timers.fetch();
-	write(this.res, {test:'listing all timers'});
+	var that = this;
+	
+	timers.fetch().then(function(){
+		write(that.res, timers.toJSON());
+	});
 }
 
 function write(context, data){
@@ -76,6 +84,10 @@ router.put('/timer/:id', update);
 router.get('/timers', list);
 
 function handleRequest(request, response){
+	request.chunks = [];
+	request.on('data', function(chunk) {
+		request.chunks.push(chunk);
+	});
 	router.dispatch(request, response, function(err){
 		if(err){
 			response.writeHead(404);
