@@ -1,4 +1,4 @@
 {
-	"BASEURL": "http://timer2.ryan.local/",
+	"APP_URL": "http://timer2.ryan.local/",
 	"MODE": "debug"
 }

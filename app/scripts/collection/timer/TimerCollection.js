@@ -4,6 +4,7 @@ define([
 ], function(AbstractCollection, TimerModel){
 
 	var TimerCollection = AbstractCollection.extend({
+		url : 'timers',
 		model : TimerModel
 	});
 

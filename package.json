@@ -1,6 +1,14 @@
 {
 	"name": "timer2",
 	"version": "0.0.0",
+	"dependencies" : {
+		"connect": "~2.7.7",
+		"xtend": "~2.0.3",
+		"director":"~1.2.0",
+		"backbone":"1.0.0",
+		"requirejs": "2.1.5",
+		"amdefine": ">=0.0.2"
+	},
 	"devDependencies": {
 		"grunt": "~0.4.1",
 		"grunt-contrib-concat": "~0.1.3",

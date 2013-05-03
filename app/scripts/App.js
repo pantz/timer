@@ -15,6 +15,7 @@ define([
 			_.extend(this, {
 				router : null,
 				config : null,
+				timerCollection: new TimerCollection(),
 				loaded : false,
 				layout : null
 			});
